@@ -1,0 +1,62 @@
+import random
+from enum import Enum
+from collections import Counter
+
+#count color
+remaining_random_color = [9,9,9,9,9,9]
+
+face_dict = {
+    'frontView' : [None for _ in range(9)],
+    'topView' : [None for _ in range(9)],
+    'buttomView' : [None for _ in range(9)],
+    'leftView' : [None for _ in range(9)],
+    'rightView' : [None for _ in range(9)],
+    'backView' : [None for _ in range(9)]
+    }
+
+class ColorEnum(Enum):
+    red = 0
+    blue = 1
+    green = 2
+    yellow = 3
+    white = 4
+    black = 5
+
+
+def display_face_view(face_dict):
+    i = 0
+    while i < 7:
+        print(face_dict[i], face_dict[i + 1], face_dict[i + 2])
+        i += 3
+
+
+def is_color_usable(color_code):
+    usable = False
+    is_empty_random_slot = all(remain_count == 0 for remain_count in remaining_random_color)
+    #check every index have 6 colors
+    if not is_empty_random_slot:
+        remain_count = remaining_random_color[color_code]
+        if remain_count > 0:
+            remaining_random_color[color_code] = remain_count - 1
+            usable = False
+        elif remain_count == 0:
+            usable = True
+    return usable
+
+
+def random_face_color(face_view):
+    for face_position in range(9):
+        usable = True
+        while usable:
+            color_code = random.randint(0, 5)
+            usable = is_color_usable(color_code)
+            face_dict[face_view][face_position] = ColorEnum(color_code).name
+    return face_dict
+
+for key in face_dict:
+    random_face_color(key)
+    print(key)
+    display_face_view(face_dict[key])
+    print()
+
+

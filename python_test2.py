@@ -1,5 +1,7 @@
 import unittest
 from python_test1 import random_face_color
+from python_test1 import is_color_usable
+import random
 from enum import Enum
 from collections import Counter
 
@@ -29,8 +31,23 @@ class TestRandomFaceColorCubic(unittest.TestCase):
         self.assertEqual(result,remaining_random_color)
 
     def test_is_color_usable(self):
-        pass
-
+        remaining_random_color = [0,0,0,0,0,0]
+        #ตั้งค่าตัวแปรตรงกันข้ามเพื่อเช็คผลลัพธ์
+        result_case1 = True
+        result_case2 = False
+        #ตัวแปรที่ใส่ มีค่าเท่านี้ ผลลัพธ์ต้องเป็น true 
+        #case 1 : ถ้าสีที่ใส่ยังไม่ถึง 10 ผลลัพธ์จะต้องเป็น False ทั้งหมด
+        #case 2 : ถ้าสีที่ใส่เกิน 9 แล้วผลลัพธ์จะต้องออกเป็น True   
+        #for นอกเป็นสี 6 สี
+        for x in range(6):
+            #ตำแหน่ง 9 ตำแหน่ง
+            for y in range(10):
+                result_case1 = is_color_usable(x,remaining_random_color)
+                if result_case1 == True and y > 9:
+                    result_case2 = True
+        #ถ้าครบทั้ง 2 ข้อคือใช้งานได้จะต้องออกเป็น true 
+        self.assertEqual(result_case1,result_case2)
+        #เช็คว่าถ้าให้ color code เท่านี้ๆ มา จะให้ค่า true false ถูกมั้ย
 if __name__ == '__main__':
     unittest.main()
 

@@ -35,7 +35,6 @@ def is_color_usable(color_code,color_list):
 
 def random_face_color(face_dict):
     remaining_random_color = [0,0,0,0,0,0]
-    count_red = 0
     for key in face_dict:
         for face_position in range(9):
             usable = True
